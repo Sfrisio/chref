@@ -1,5 +1,9 @@
 # chref
 
+ [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+ [![OS - Linux](https://img.shields.io/badge/OS-Linux-blue?logo=linux&logoColor=white)](https://www.linux.org/ "Go to Linux homepage")
+ 
+
 `chef` is an utility that allows you to combine the commands `chmod --reference` and `chown --reference` into one command.
 
 This is early development version. I am currently considering:
