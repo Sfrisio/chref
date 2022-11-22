@@ -14,6 +14,7 @@ This is early development version. I am currently considering:
 - [ ] On a Linux system, changing symbolic link, by default changes only the target of the symbolic link. I'd like to change ownership of symbolic link itself
 - [ ] DEB package
 - [ ] RPM package
+- [ ] ARM porting
 
 If you want to tip me:
 
