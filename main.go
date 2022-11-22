@@ -43,12 +43,14 @@ func main() {
 		} else {
 			refPermissions = os.FileMode(statRef.Mode & 0777)
 		}
+
 	}
 	// Check if DFILE exists
 	if _, errDestNotExists := os.Stat(*destinationObj); errors.Is(errDestNotExists, os.ErrNotExist) {
 		fmt.Printf("%s: %s\n", os.Args[0], errDestNotExists)
 		os.Exit(2)
 	}
+
 	if errChown := applyChown(*destinationObj, int32(statRef.Uid), int32(statRef.Gid)); errChown != nil {
 		fmt.Printf("%s: %s\n", os.Args[0], errChown)
 		os.Exit(4)
@@ -57,6 +59,10 @@ func main() {
 		fmt.Printf("%s: %s\n", os.Args[0], errChmod)
 	}
 }
+
+// TO-DO for a recursive purpose we need to check id it's a file or directory
+// we can use object like refPermissions.IsDir() but for destination scope.
+// also ca be a good idea to have a generic funcion to check if file or directory exist without going into detail whether source or destination
 
 func applyChown(destFile string, refUID, refGID int32) error {
 	return syscall.Chown(destFile, int(refUID), int(refGID))
