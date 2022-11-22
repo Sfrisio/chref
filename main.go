@@ -17,7 +17,7 @@ func main() {
 	var statRef syscall.Stat_t
 	var refPermissions fs.FileMode
 	var usage = func() {
-		fmt.Fprintf(flag.CommandLine.Output(), "Usage: %s --reference RFILE --destination DFILE\n", os.Args[0])
+		fmt.Fprintf(flag.CommandLine.Output(), "Usage: %s --reference RFILE --destination DFILE\n", flag.CommandLine.Name())
 		flag.PrintDefaults()
 		os.Exit(1)
 	}
@@ -33,12 +33,12 @@ func main() {
 	}
 	// Check if RFILE exists
 	if _, errRefNotExists := os.Stat(*referencedObj); errors.Is(errRefNotExists, os.ErrNotExist) {
-		fmt.Printf("%s: %s\n", os.Args[0], errRefNotExists)
+		fmt.Printf("%s: %s\n", flag.CommandLine.Name(), errRefNotExists)
 		os.Exit(2)
 	} else {
 		// If RFILE exists, save its information in a struct (syscall.Stat_t)
 		if errStatRef := syscall.Stat(*referencedObj, &statRef); errStatRef != nil {
-			fmt.Printf("%s: %s\n", os.Args[0], errStatRef)
+			fmt.Printf("%s: %s\n", flag.CommandLine.Name(), errStatRef)
 			os.Exit(3)
 		} else {
 			refPermissions = os.FileMode(statRef.Mode & 0777)
@@ -47,16 +47,16 @@ func main() {
 	}
 	// Check if DFILE exists
 	if _, errDestNotExists := os.Stat(*destinationObj); errors.Is(errDestNotExists, os.ErrNotExist) {
-		fmt.Printf("%s: %s\n", os.Args[0], errDestNotExists)
+		fmt.Printf("%s: %s\n", flag.CommandLine.Name(), errDestNotExists)
 		os.Exit(2)
 	}
 
 	if errChown := applyChown(*destinationObj, int32(statRef.Uid), int32(statRef.Gid)); errChown != nil {
-		fmt.Printf("%s: %s\n", os.Args[0], errChown)
+		fmt.Printf("%s: %s\n", flag.CommandLine.Name(), errChown)
 		os.Exit(4)
 	}
 	if errChmod := applyChmod(*destinationObj, refPermissions); errChmod != nil {
-		fmt.Printf("%s: %s\n", os.Args[0], errChmod)
+		fmt.Printf("%s: %s\n", flag.CommandLine.Name(), errChmod)
 	}
 }
 
