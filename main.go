@@ -61,8 +61,8 @@ func main() {
 }
 
 // TO-DO for a recursive purpose we need to check id it's a file or directory
-// we can use object like refPermissions.IsDir() but for destination scope.
-// also ca be a good idea to have a generic funcion to check if file or directory exist without going into detail whether source or destination
+// we can use object like refPermissions.IsDir() but only for destination scope.
+// Also can be a good idea to have a generic funcion to check if file or directory exist without going into detail whether source or destination
 
 func applyChown(destFile string, refUID, refGID int32) error {
 	return syscall.Chown(destFile, int(refUID), int(refGID))
