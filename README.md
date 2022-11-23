@@ -5,7 +5,7 @@
  [![contributions - welcome](https://img.shields.io/badge/contributions-welcome-blue)](/CONTRIBUTING.md "Go to contributions doc")
 
 
-`chef` is an utility that allows you to combine the commands `chmod --reference` and `chown --reference` into one command.
+`chref` is an utility that allows you to combine the commands `chmod --reference` and `chown --reference` into one command.
 
 This is early development version. I am currently considering:
 
