@@ -21,6 +21,11 @@ You can do this by adding the following line to your $HOME/.profile (or $HOME/.b
 ```bash
 export PATH=$PATH:/usr/local/chref/bin
 ```
+**Note**: Changes made to a profile file may not apply until the next time you log into your computer. To apply the changes immediately, run the following command (may differ if you are using .profile instead of .bashrc):
+
+```bash
+source $HOME/.bashrc
+```
 
 ## Roadmap:
 
