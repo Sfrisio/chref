@@ -9,6 +9,19 @@
 
 This is early development version. I am currently considering:
 
+## Manual Installation
+
+Remove any previous `chref` installation by deleting the /usr/local/chref folder (if it exists), then extract the archive you just downloaded into /usr/local, creating a fresh `chref` tree in /usr/local/chref
+
+```bash
+sudo tar -C /usr/local -zxf chref.tar.gz
+```
+You can do this by adding the following line to your $HOME/.profile (or $HOME/.bashrc) or /etc/profile (for a system-wide installation)
+
+```bash
+export PATH=$PATH:/usr/local/chref/bin
+```
+
 ## Roadmap:
 
 - [ ] On a Linux system, changing symbolic link, by default changes only the target of the symbolic link. I'd like to change ownership of symbolic link itself
