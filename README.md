@@ -18,7 +18,6 @@ Then run this command:
 
 ```bash
 go build -v -ldflags="-X 'chref/build.Version=$(cat VERSION)' -X 'chref/build.BuildUser=$(id -u -n)' -X 'chref/build.BuildTime=$(date)'"
-chref
 ```
 
 ## Manual Installation
