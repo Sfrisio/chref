@@ -10,6 +10,15 @@
 
 This is early development version. I am currently considering:
 
+## Roadmap:
+
+- [ ] On a Linux system, changing symbolic link, by default changes only the target of the symbolic link. I'd like to change ownership of symbolic link itself
+- [ ] man pages
+- [ ] DEB package
+- [ ] RPM package
+- [ ] MacOS PKG
+- [ ] ARM porting
+
 ## Building from source
 
 If you want to build `chref` from source, please verify to have already installed **go1.19.3** or higher.
@@ -37,14 +46,6 @@ export PATH=$PATH:/usr/local/chref/bin
 ```bash
 source $HOME/.bashrc
 ```
-
-## Roadmap:
-
-- [ ] On a Linux system, changing symbolic link, by default changes only the target of the symbolic link. I'd like to change ownership of symbolic link itself
-- [ ] man pages
-- [ ] DEB package
-- [ ] RPM package
-- [ ] ARM porting
 
 If you want to tip me:
 
