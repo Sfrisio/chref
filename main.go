@@ -57,6 +57,7 @@ func main() {
 	}
 	if errChmod := applyChmod(*destinationObj, refPermissions); errChmod != nil {
 		fmt.Printf("%s: %s\n", flag.CommandLine.Name(), errChmod)
+		os.Exit(4)
 	}
 }
 
