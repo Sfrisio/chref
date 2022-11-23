@@ -9,16 +9,20 @@ import (
 	"syscall"
 )
 
+const version = "v0.1"
+
 func main() {
 	// RFILE: is the reference file, from which the user:group and permissions will be extracted
 	// DFILE: is the destination file, to which the user:group membership and the permissions extracted from the reference file will be applied
 	referencedObj := flag.String("reference", "", "referenced file or directory")
 	destinationObj := flag.String("destination", "", "destination file or directory")
-	var statRef syscall.Stat_t
+	var statRef, statDef syscall.Stat_t
+
 	var refPermissions fs.FileMode
+	var defIsDir fs.FileInfo
 	var usage = func() {
-		fmt.Fprintf(flag.CommandLine.Output(), "Usage: %s --reference RFILE --destination DFILE\n", flag.CommandLine.Name())
-		flag.PrintDefaults()
+		fmt.Fprintf(flag.CommandLine.Output(), "Usage: %s --reference RFILE --destination DFILE\nRelease %s\n", flag.CommandLine.Name(), version)
+		//flag.PrintDefaults()
 		os.Exit(1)
 	}
 	flag.Parse()
@@ -28,7 +32,7 @@ func main() {
 	}
 	// Flags return value is stored in pointer, so we have to use a pointer to evaluate the values ​​of the two strings
 	if *referencedObj == "" || *destinationObj == "" {
-		flag.PrintDefaults()
+		usage()
 		os.Exit(1)
 	}
 	// Check if RFILE exists
@@ -49,6 +53,23 @@ func main() {
 	if _, errDestNotExists := os.Stat(*destinationObj); errors.Is(errDestNotExists, os.ErrNotExist) {
 		fmt.Printf("%s: %s\n", flag.CommandLine.Name(), errDestNotExists)
 		os.Exit(2)
+	} else {
+		// If DFILE exists, save its information in a struct (syscall.Stat_t)
+		if errStatDef := syscall.Stat(*destinationObj, &statDef); errStatDef != nil {
+			fmt.Printf("%s: %s\n", flag.CommandLine.Name(), errStatDef)
+			os.Exit(3)
+		} else {
+			// Check if DFILE is a file or directory
+			defIsDir, _ = os.Stat(*destinationObj)
+			// TO-DO error management
+			// TO-DO move applyChown & applyChmod here
+
+			// This is only for a temporary debug meanwhile implementing the recursive feature
+			if 1 == 0 {
+				fmt.Printf("Name: %s IsDir?: %t\n", defIsDir.Name(), defIsDir.IsDir())
+			}
+		}
+
 	}
 
 	if errChown := applyChown(*destinationObj, int32(statRef.Uid), int32(statRef.Gid)); errChown != nil {
