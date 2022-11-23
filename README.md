@@ -2,12 +2,32 @@
 
  [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
  [![OS - Linux](https://img.shields.io/badge/OS-Linux-blue?logo=linux&logoColor=white)](https://www.linux.org/ "Go to Linux homepage")
+ [![OS - MacOS](https://img.shields.io/badge/OS-macOS-blue?logo=Apple&logoColor=white)](https://apple.com/ "Go to Apple homepage")
  [![contributions - welcome](https://img.shields.io/badge/contributions-welcome-blue)](/CONTRIBUTING.md "Go to contributions doc")
 
 
 `chref` is an utility that allows you to combine the commands `chmod --reference` and `chown --reference` into one command.
 
 This is early development version. I am currently considering:
+
+## Roadmap:
+
+- [ ] On a Linux system, changing symbolic link, by default changes only the target of the symbolic link. I'd like to change ownership of symbolic link itself
+- [ ] man pages
+- [ ] DEB package
+- [ ] RPM package
+- [ ] MacOS PKG
+- [ ] ARM porting
+
+## Building from source
+
+If you want to build `chref` from source, please verify to have already installed **go1.19.3** or higher.
+
+Then run this command:
+
+```bash
+go build -v -ldflags="-X 'chref/build.Version=$(cat VERSION)' -X 'chref/build.BuildUser=$(id -u -n)' -X 'chref/build.BuildTime=$(date)'"
+```
 
 ## Manual Installation
 
@@ -27,17 +47,6 @@ export PATH=$PATH:/usr/local/chref/bin
 source $HOME/.bashrc
 ```
 
-## Roadmap:
-
-- [ ] On a Linux system, changing symbolic link, by default changes only the target of the symbolic link. I'd like to change ownership of symbolic link itself
-- [ ] man pages
-- [ ] DEB package
-- [ ] RPM package
-- [ ] ARM porting
-
 If you want to tip me:
 
 [![DogecoinBadge](https://img.shields.io/badge/Doge-Coin-yellow.svg)](https://dogecoin.com) **DAqFTEzxSxaNZ1HpVJsEV5XL2a73g3ucio**
-
-
-
