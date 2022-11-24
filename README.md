@@ -4,7 +4,7 @@
  [![OS - Linux](https://img.shields.io/badge/OS-Linux-blue?logo=linux&logoColor=white)](https://www.linux.org/ "Go to Linux homepage")
  [![OS - MacOS](https://img.shields.io/badge/OS-macOS-blue?logo=Apple&logoColor=white)](https://apple.com/ "Go to Apple homepage")
  [![contributions - welcome](https://img.shields.io/badge/contributions-welcome-blue)](/CONTRIBUTING.md "Go to contributions doc")
-
+ ![visitor badge](https://visitor-badge.glitch.me/badge?page_id=Sfrisio.chref)
 
 `chref` is an utility that allows you to combine the commands `chmod --reference` and `chown --reference` into one command.
 
