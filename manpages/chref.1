@@ -1,0 +1,29 @@
+.\" Manpage for chref.
+.\" Contact olelbis@gmail.com to correct errors or typos.
+.TH man 8 "26 Nov 2022" "1.0" "chref man page"
+.SH NAME
+.B chref 
+- change file ownership and attribute based on a source file or directory
+.SH SYNOPSIS
+.B chref 
+--reference FILENAME|DIRNAME --destination FILENAME|DIRNAME [-R]
+.SH DESCRIPTION
+.B chsef 
+is a command line utility that allows you to combine the commands chmod --reference and chown --reference into one command.
+.SH OPTIONS
+.B chref 
+command take the following options:
+.PP
+--reference mandatory, source file or directory as reference for ownership and permission.
+.PP 
+--destination mandatory, destination file or directory inherit ownership and permission from reference parameter.
+.PP
+-R optional - if specified and the destination parameter is a directory, the changes will be applied recursively, otherwise confirmation will be asked to apply the change only to the directory and not to its content.
+.SH EXIT STATUS
+The chref utility exits 0 on success, and >0 if an error occurs.
+.SH SEE ALSO
+chmod(1), chown(1)
+.SH BUGS
+No known bugs.
+.SH AUTHOR
+Mr Sfrisio (sfrisio@gmail.com) & Mr Olelbis (olelbis@gmail.com)
