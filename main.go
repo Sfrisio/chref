@@ -19,6 +19,11 @@ var statRef, statDef syscall.Stat_t
 var refPermissions fs.FileMode
 var defIsDir fs.FileInfo
 
+const errnoparameter = 1
+const errnoexist = 2
+const errnostat = 3
+const errnochange = 4
+
 func main() {
 	// RFILE: is the reference file, from which the user:group and permissions will be extracted
 	// DFILE: is the destination file, to which the user:group membership and the permissions extracted from the reference file will be applied
@@ -28,7 +33,7 @@ func main() {
 	var usage = func() {
 		fmt.Fprintf(flag.CommandLine.Output(), "Usage: %s --reference RFILE --destination DFILE [-R]\nchref Release: %s\nBuild Time: %s\nBuild User: %s\n", flag.CommandLine.Name(), b.Version, b.BuildTime, b.BuildUser)
 		flag.PrintDefaults()
-		os.Exit(1)
+		os.Exit(errnoparameter)
 	}
 	flag.Parse()
 	// Checking starts from os.Args[1:] because the first value of this slice (os.Args[0]) is always the path to the program
@@ -38,17 +43,17 @@ func main() {
 	// Flags return value is stored in pointer, so we have to use a pointer to evaluate the values ​​of the two strings
 	if *referencedObj == "" || *destinationObj == "" {
 		usage()
-		os.Exit(1)
+		os.Exit(errnoparameter)
 	}
 	// Check if RFILE exists
 	if _, errRefNotExists := os.Stat(*referencedObj); errors.Is(errRefNotExists, os.ErrNotExist) {
 		fmt.Printf("%s: %s\n", flag.CommandLine.Name(), errRefNotExists)
-		os.Exit(2)
+		os.Exit(errnoexist)
 	} else {
 		// If RFILE exists, save its information in a struct (syscall.Stat_t)
 		if errStatRef := syscall.Stat(*referencedObj, &statRef); errStatRef != nil {
 			fmt.Printf("%s: %s\n", flag.CommandLine.Name(), errStatRef)
-			os.Exit(3)
+			os.Exit(errnostat)
 		} else {
 			refPermissions = os.FileMode(statRef.Mode & 0777)
 		}
@@ -57,12 +62,12 @@ func main() {
 	// Check if DFILE exists
 	if _, errDestNotExists := os.Stat(*destinationObj); errors.Is(errDestNotExists, os.ErrNotExist) {
 		fmt.Printf("%s: %s\n", flag.CommandLine.Name(), errDestNotExists)
-		os.Exit(2)
+		os.Exit(errnoexist)
 	} else {
 		// If DFILE exists, save its information in a struct (syscall.Stat_t)
 		if errStatDef := syscall.Stat(*destinationObj, &statDef); errStatDef != nil {
 			fmt.Printf("%s: %s\n", flag.CommandLine.Name(), errStatDef)
-			os.Exit(3)
+			os.Exit(errnostat)
 		} else {
 			// Check if DFILE is a file or directory
 			defIsDir, _ = os.Stat(*destinationObj)
@@ -88,11 +93,11 @@ func main() {
 
 	if errChown := applyChown(*destinationObj, int32(statRef.Uid), int32(statRef.Gid)); errChown != nil {
 		fmt.Printf("%s: %s\n", flag.CommandLine.Name(), errChown)
-		os.Exit(4)
+		os.Exit(errnochange)
 	}
 	if errChmod := applyChmod(*destinationObj, refPermissions); errChmod != nil {
 		fmt.Printf("%s: %s\n", flag.CommandLine.Name(), errChmod)
-		os.Exit(4)
+		os.Exit(errnochange)
 	}
 }
 
@@ -139,11 +144,11 @@ func printFullFilePath(dfilepath string, info os.FileInfo, err error) error {
 	// Here we can do a chown and chmod recursively :P instead to simply print the full file path
 	if errChown := applyChown(dfilepath, int32(statRef.Uid), int32(statRef.Gid)); errChown != nil {
 		fmt.Printf("%s: %s\n", flag.CommandLine.Name(), errChown)
-		os.Exit(4)
+		os.Exit(errnochange)
 	}
 	if errChmod := applyChmod(dfilepath, refPermissions); errChmod != nil {
 		fmt.Printf("%s: %s\n", flag.CommandLine.Name(), errChmod)
-		os.Exit(4)
+		os.Exit(errnochange)
 	}
 	return nil
 }
