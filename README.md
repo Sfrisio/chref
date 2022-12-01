@@ -21,12 +21,22 @@ This is early development version. I am currently considering:
 
 ## Building from source
 
-If you want to build `chref` from source, please verify to have already installed **go1.19.3** or higher.
+If you want to build `chref` from source, please verify to have already installed **go1.19.x** or higher.
 
 Then run this command:
 
 ```bash
 go build -v -ldflags="-X 'chref/build.Version=$(cat VERSION)' -X 'chref/build.BuildUser=$(id -u -n)' -X 'chref/build.BuildTime=$(date)'"
+```
+
+If you want to build automatically `chref` for all the supported platform consider to use `binary-builder.sh` provided in *scripts* folder.
+
+Clone this repository firs, then follow these steps
+
+```bash
+cd chref
+chmod +x scripts/binary-builder.sh
+./scripts/binary-builder.sh
 ```
 
 ## Manual Installation

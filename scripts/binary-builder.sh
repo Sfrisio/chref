@@ -1,9 +1,27 @@
 #!/bin/bash
 
-echo "chref binary building"
+BRED='\033[1;31m'
+GREEN='\033[0;32m'
+NC='\033[0m'
 
-echo "[+] building linux amd64 ..."
-env GOOS=linux GOARCH=amd64 go build -o pkg/linux_amd64/bin/chref -v -ldflags="-X 'chref/build.Version=$(cat VERSION)' -X 'chref/build.BuildUser=Team chref' -X 'chref/build.BuildTime=$(date)'" && cp -p {VERSION,LICENSE} pkg/linux_amd64/. && echo "[+] building linux arm64 ..."
-env GOOS=linux GOARCH=arm64 go build -o pkg/linux_arm64/bin/chref -v -ldflags="-X 'chref/build.Version=$(cat VERSION)' -X 'chref/build.BuildUser=Team chref' -X 'chref/build.BuildTime=$(date)'" && cp -p {VERSION,LICENSE} pkg/linux_arm64/. && echo "[+] building freebsd amd64 ..."
-env GOOS=freebsd GOARCH=amd64 go build -o pkg/freebsd_amd64/bin/chref -v -ldflags="-X 'chref/build.Version=$(cat VERSION)' -X 'chref/build.BuildUser=Team chref' -X 'chref/build.BuildTime=$(date)'" && cp -p {VERSION,LICENSE} pkg/freebsd_amd64/. && echo "[+] building darwin (MacOS) amd64 ..."
-env GOOS=darwin GOARCH=amd64 go build -o pkg/darwin_amd64/bin/chref -v -ldflags="-X 'chref/build.Version=$(cat VERSION)' -X 'chref/build.BuildUser=Team chref' -X 'chref/build.BuildTime=$(date)'" && cp -p {VERSION,LICENSE} pkg/darwin_amd64
+PKG_VERSION=$(cat VERSION)
+PKG_NAME="chref-${PKG_VERSION}-"
+
+allSupportedOS=("linux" "freebsd" "darwin")
+
+echo -e "\n${BRED}**** chref binary building ****${NC}\n"
+
+for os in ${allSupportedOS[@]}; do 
+    env GOOS=linux GOARCH=amd64 go build -o pkg/${PKG_NAME}${os}_amd64/bin/chref -v -ldflags="-X 'github.com/Sfrisio/chref/build.Version=$(cat VERSION)' -X 'github.com/Sfrisio/chref/build.BuildUser=Team chref' -X 'github.com/Sfrisio/chref/build.BuildTime=$(date)'" && cp -p {VERSION,LICENSE} pkg/${PKG_NAME}${os}_amd64/.
+    if [[ ${os} != "freebsd" ]]; then
+        echo -e "${GREEN}[+] building ${os} arm64 ...${NC}"
+        env GOOS=linux GOARCH=arm64 go build -o pkg/${PKG_NAME}${os}_arm64/bin/chref -v -ldflags="-X 'github.com/Sfrisio/chref/build.Version=$(cat VERSION)' -X 'github.com/Sfrisio/chref/build.BuildUser=Team chref' -X 'github.com/Sfrisio/chref/build.BuildTime=$(date)'" && cp -p {VERSION,LICENSE} pkg/${PKG_NAME}${os}_arm64/.
+    fi
+done
+
+cd pkg/
+
+for d in */ ; do
+    basedirname=$(basename "${d}")
+    echo -e "\n[+] making tar.gz from: ${GREEN} ${basedirname} ...${NC}" && tar -zcf ${basedirname}.tar.gz ${d}
+done
