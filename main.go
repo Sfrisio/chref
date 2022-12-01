@@ -2,7 +2,6 @@ package main
 
 import (
 	"bufio"
-	b "chref/build"
 	"errors"
 	"flag"
 	"fmt"
@@ -12,6 +11,8 @@ import (
 	"path/filepath"
 	"strings"
 	"syscall"
+	
+	b "github.com/Sfrisio/chref/build"
 )
 
 var statRef, statDef syscall.Stat_t
