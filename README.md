@@ -13,7 +13,7 @@ This is early development version. I am currently considering:
 ## Roadmap:
 
 - [ ] On a Linux system, changing symbolic link, by default changes only the target of the symbolic link. I'd like to change ownership of symbolic link itself
-- [ ] man pages
+- [x] man pages
 - [ ] DEB package
 - [ ] RPM package
 - [ ] MacOS PKG
@@ -26,7 +26,7 @@ If you want to build `chref` from source, please verify to have already installe
 Then run this command:
 
 ```bash
-go build -v -ldflags="-X 'chref/build.Version=$(cat VERSION)' -X 'chref/build.BuildUser=$(id -u -n)' -X 'chref/build.BuildTime=$(date)'"
+go build -v -ldflags="-X 'github.com/Sfrisio/chref/build.Version=$(cat VERSION)' -X 'github.com/Sfrisio/chref/build.BuildUser=Team chref' -X 'github.com/Sfrisio/chref/build.BuildTime=$(date)'"
 ```
 
 If you want to build automatically `chref` for all the supported platform consider to use `binary-builder.sh` provided in *scripts* folder.

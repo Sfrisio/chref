@@ -12,10 +12,10 @@ allSupportedOS=("linux" "freebsd" "darwin")
 echo -e "\n${BRED}**** chref binary building ****${NC}\n"
 
 for os in ${allSupportedOS[@]}; do 
-    env GOOS=linux GOARCH=amd64 go build -o pkg/${PKG_NAME}${os}_amd64/bin/chref -v -ldflags="-X 'github.com/Sfrisio/chref/build.Version=$(cat VERSION)' -X 'github.com/Sfrisio/chref/build.BuildUser=Team chref' -X 'github.com/Sfrisio/chref/build.BuildTime=$(date)'" && cp -p {VERSION,LICENSE} pkg/${PKG_NAME}${os}_amd64/.
+    env GOOS=${os} GOARCH=amd64 go build -o pkg/${PKG_NAME}${os}_amd64/bin/chref -v -ldflags="-X 'github.com/Sfrisio/chref/build.Version=$(cat VERSION)' -X 'github.com/Sfrisio/chref/build.BuildUser=Team chref' -X 'github.com/Sfrisio/chref/build.BuildTime=$(date)'" && cp -p {VERSION,LICENSE} pkg/${PKG_NAME}${os}_amd64/.
     if [[ ${os} != "freebsd" ]]; then
         echo -e "${GREEN}[+] building ${os} arm64 ...${NC}"
-        env GOOS=linux GOARCH=arm64 go build -o pkg/${PKG_NAME}${os}_arm64/bin/chref -v -ldflags="-X 'github.com/Sfrisio/chref/build.Version=$(cat VERSION)' -X 'github.com/Sfrisio/chref/build.BuildUser=Team chref' -X 'github.com/Sfrisio/chref/build.BuildTime=$(date)'" && cp -p {VERSION,LICENSE} pkg/${PKG_NAME}${os}_arm64/.
+        env GOOS=${os} GOARCH=arm64 go build -o pkg/${PKG_NAME}${os}_arm64/bin/chref -v -ldflags="-X 'github.com/Sfrisio/chref/build.Version=$(cat VERSION)' -X 'github.com/Sfrisio/chref/build.BuildUser=Team chref' -X 'github.com/Sfrisio/chref/build.BuildTime=$(date)'" && cp -p {VERSION,LICENSE} pkg/${PKG_NAME}${os}_arm64/.
     fi
 done
 
