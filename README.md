@@ -2,6 +2,7 @@
 
  [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
  [![OS - Linux](https://img.shields.io/badge/OS-Linux-blue?logo=linux&logoColor=white)](https://www.linux.org/ "Go to Linux homepage")
+ [![OS - FreeBSD](https://img.shields.io/badge/OS-FreeBSD-blue)](https://www.freebsd.org/ "Go to FreeBSD homepage")
  [![OS - MacOS](https://img.shields.io/badge/OS-macOS-blue?logo=Apple&logoColor=white)](https://apple.com/ "Go to Apple homepage")
  [![contributions - welcome](https://img.shields.io/badge/contributions-welcome-blue)](/CONTRIBUTING.md "Go to contributions doc")
  ![visitor badge](https://visitor-badge.glitch.me/badge?page_id=Sfrisio.chref)
@@ -14,10 +15,9 @@ This is early development version. I am currently considering:
 
 - [ ] On a Linux system, changing symbolic link, by default changes only the target of the symbolic link. I'd like to change ownership of symbolic link itself
 - [x] man pages
-- [ ] DEB package
-- [ ] RPM package
+- [x] DEB package
+- [x] RPM package
 - [ ] MacOS PKG
-- [ ] ARM porting
 
 ## Building from source
 
