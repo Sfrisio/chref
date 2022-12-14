@@ -31,7 +31,7 @@ go build -v -ldflags="-X 'github.com/Sfrisio/chref/build.Version=$(cat VERSION)'
 
 If you want to build automatically `chref` for all the supported platform consider to use `binary-builder.sh` provided in *scripts* folder.
 
-Clone this repository firs, then follow these steps
+Clone this repository first, then follow these steps
 
 ```bash
 cd chref
